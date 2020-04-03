@@ -58,13 +58,13 @@ Agent:
 
 ### Approach 1:
 
-Started with DDPG pendulum as reference with Single agent to train the environment. Environment was learning very slowly. After running around 300 episodes, environment is at a reward score of 2. I started tuning the environment by adding batch normalization to both Actor / critic and adjusted the hyper parameters.  I noticed only a slight improvement in the results.  
+I started with DDPG pendulum as reference with Single agent to train the Reacher environment. The agent is learning very slowly. After running around 300 episodes, agent got the reward score of 2. I started tuning the environment by adding batch normalization to both Actor / critic and adjusted the hyper parameters.  I noticed only a slight improvement in the results.  
 
-I referred to benchmark implementation page from the course and realized that with a single agent the experience replay buffer is having less variety of SARS tuples and hence the learning from the single agent will take a longer time by running a lot of episodes to converge.
+I referred to benchmark implementation page from the course and realized that with a single agent the experience replay buffer is having less variety of SARS tuples and hence the learning from the single agent will take a longer time and episodes  to converge. Hence, I decided to go with Approach 2.
 
 ### Approach 2:
 
-To add variety to the experience replay, I decided to go with multiple start position for the agents and add them to experience replay for sampling and learning.  I started with 20 agents sharing the same replay buffer. However, my computer was taking a lot of time to process the agents. Then, I decided to train a single actor and critic environments rather than 20 actor and critic environments by sharing the same experience replay buffer. The multi agents environment started with 20 agents with 20 different starting positions and gave a variety of samples for the agent to learn from.  This showed promising results. 
+To solve the problem in approach 1, I decided to add variety to the experience replay buffer. Having multiple start position for the agents and adding the steps encountered by these 20 agents to experience replay will improve the diversity of sampling and learning.  I started with 20 agents sharing the same replay buffer with different actor and critic models. I ended up with 40 networks to be trained. My computer was taking a lot of time to process the agents. So, I decided to train a single actor (local and target) and critic (local and target) rather than 20 actor and critic environments by sharing the same experience replay buffer. The multi agents environment started with 20 agents with 20 different starting positions and gave a variety of samples for the agent to learn from.  This showed promising results. 
 
 ### Hyperparameters and Tuning:
 
@@ -77,17 +77,15 @@ LR_CRITIC = 1e-4        : learning rate of the critic
 WEIGHT_DECAY = 0        : L2 weight decay
 UPDATE_EVERY = 5
 
-
-
-In order to speed up learning , I used learning rate for actor as 1e-3 rather than 1e-4 for critic. Also, since I am collecting 20 SARS tuples for each step, I decide to increase the Tau from 1e-3 to 2e-3 to speed up convergence. Since, I increased Tau, I decided to add clipping gradient for critic by adding the line below as suggested in the benchmark implementation page.
+In order to speed up learning , I used learning rate for actor as 1e-3 rather than 1e-4 for critic. Also, since I am collecting 20 SARS tuples for each step, I decide to increase the Tau from 1e-3 to 2e-3 to speed up convergence. Since, I increased Tau, I decided to add clipping gradient for critic by adding the line below as suggested in the benchmark implementation page. 
 
 ```python
 torch.nn.utils.clip_grad_norm(self.critic_local.parameters(), 1)
 ```
 
-I also tried updating the network every 5 steps and did not see significant improvement in the results. 
+I also tried updating the network every 5 steps and also tuning the weight decay. I did not see significant improvement in the results. 
 
-I decided to tune the network by adding batch normalization and I  noticed little to none improvement in the learning of the agent. 
+I decided to tune the network by adding batch normalization and I  noticed little to none improvement in the learning of the agent.  The above hyperparameters gave good results as can be seen in the results section below
 
 ### Ideas for Future Work:
 
