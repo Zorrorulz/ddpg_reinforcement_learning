@@ -4,7 +4,7 @@
 [image2]: https://user-images.githubusercontent.com/10624937/43851646-d899bf20-9b00-11e8-858c-29b5c2c94ccc.png "Crawler"
 
 
-# Project 2: DDPG (Actor/Critic) Reinforcement Learning using PyTorch and Unity ML -  Reacher Environment 
+# DDPG (Actor/Critic) Reinforcement Learning using PyTorch and Unity ML -  Reacher Environment Report
 
 ### Overview
 
@@ -33,69 +33,72 @@ The observation space consists of 33 variables corresponding to position, rotati
 
 
 
-### Getting Started
+### Deep Deterministic Policy Gradient Algorithm
 
-### Installation and Dependencies
+DDPG is a model-free off-policy actor-critic algorithm that learns directly from observation spaces. DDPG employs Actor-Critic model, where Actor learns the policy and Critic learns the value function to evaluate the quality of the action chosen by the policy. while Deep Q-Network learns the Q-function using experience replay  and works well in discrete space, DDPG algorithm extends it to  continuous action spaces using Actor-Critic framework while learning policy.
 
-1. Anaconda Python 3.6: Download and installation instructions here: https://www.anaconda.com/download/
-
-2. Create (and activate) a new conda (virtual) environment with Python 3.6.
-
-   - Linux or Mac:
-
-     `conda create --name yourenvnamehere python=3.6`
-
-     `source activate yourenvnamehere`
-
-   - Windows:
-
-     `conda create --name yourenvnamehere python=3.6`
-
-     `activate yourenvnamehere`
-
-3. Download and save this GitHub repository.
-
-4. To install required dependencies (torch, ML-Agents trainers (v.4), etc...)
-
-   - Naviagte to where you downloaded and saved this GitHub repository (e.g., *yourpath/thisgithubrepository*)
-
-   - Change to the '.python/' subdirectory and run from the command line:
-
-     `pip3 install .`
-
-   - Note: depdeing on your system setup, you may have to install PyTorch separatetly.
-
-### Unity Environment Setup:
-
-1. Download the environment from one of the links below.  You need only select the environment that matches your operating system:
-
-    - **_Version 1: One (1) Agent_**
-        - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/one_agent/Reacher_Linux.zip)
-        - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/one_agent/Reacher.app.zip)
-        - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/one_agent/Reacher_Windows_x86.zip)
-        - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/one_agent/Reacher_Windows_x86_64.zip)
-
-    - **_Version 2: Twenty (20) Agents_**
-        - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux.zip)
-        - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher.app.zip)
-        - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86.zip)
-        - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86_64.zip)
-
-    (_For Windows users_) Check out [this link](https://support.microsoft.com/en-us/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64) if you need help with determining if your computer is running a 32-bit version or 64-bit version of the Windows operating system.
-
-    (_For AWS_) If you'd like to train the agent on AWS (and have not [enabled a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md)), then please use [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/one_agent/Reacher_Linux_NoVis.zip) (version 1) or [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Linux_NoVis.zip) (version 2) to obtain the "headless" version of the environment.  You will **not** be able to watch the agent without enabling a virtual screen, but you will be able to train the agent.  (_To watch the agent, you should follow the instructions to [enable a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md), and then download the environment for the **Linux** operating system above._)
-
-2. Place the file in the DRLND GitHub repository, in the `p2_continuous-control/` folder, and unzip (or decompress) the file. 
-
-### Repository
-
-The repository contains the below files:
-
-- agent.py : contains DDPG agent implementation, Replay buffer implementation and OU noise implementation
-- model.py : Actor and Critic models used to train the agent
-- 
-
-### Results
+![image-20200403165854862](images/image-20200403165854862.png)
 
 
 
+## Model Architecture:
+
+Pendulum-v0 environment with [Deep Deterministic Policy Gradients (DDPG)](https://github.com/udacity/deep-reinforcement-learning/blob/master/ddpg-pendulum/DDPG.ipynb) is used as reference  to build the model.  The model architecture that is used is:
+
+Actor:
+	Input(state size of 32) &rarr; Dense Layer(256) &rarr; RELU &rarr; Dense Layer(128) &rarr; RELU &rarr; Dense Layer( action size of 4) &rarr; TANH
+
+Critic:
+	Input(state size of 32) &rarr; Dense Layer(256) &rarr; RELU &rarr; Dense Layer(128) &rarr; RELU &rarr; Dense Layer( action size of 4) &rarr; TANH
+
+Agent:
+	Actor Local and Critic Local networks are trained and updates the Actor Target and Critic Target networks using weighting factor Tau.
+
+
+
+### Approach 1:
+
+Started with DDPG pendulum as reference with Single agent to train the environment. Environment was learning very slowly. After running around 300 episodes, environment is at a reward score of 2. I started tuning the environment by adding batch normalization to both Actor / critic and adjusted the hyper parameters.  I noticed only a slight improvement in the results.  
+
+I referred to benchmark implementation page from the course and realized that with a single agent the experience replay buffer is having less variety of SARS tuples and hence the learning from the single agent will take a longer time by running a lot of episodes to converge.
+
+### Approach 2:
+
+To add variety to the experience replay, I decided to go with multiple start position for the agents and add them to experience replay for sampling and learning.  I started with 20 agents sharing the same replay buffer. However, my computer was taking a lot of time to process the agents. Then, I decided to train a single actor and critic environments rather than 20 actor and critic environments by sharing the same experience replay buffer. The multi agents environment started with 20 agents with 20 different starting positions and gave a variety of samples for the agent to learn from.  This showed promising results. 
+
+### Hyperparameters and Tuning:
+
+BUFFER_SIZE = int(1e5)  : replay buffer size
+BATCH_SIZE = 128        :minibatch size
+GAMMA = 0.99            : discount factor
+TAU = 2e-3              : for soft update of target parameters
+LR_ACTOR = 1e-3         : learning rate of the actor 
+LR_CRITIC = 1e-4        : learning rate of the critic
+WEIGHT_DECAY = 0        : L2 weight decay
+UPDATE_EVERY = 5
+
+
+
+In order to speed up learning , I used learning rate for actor as 1e-3 rather than 1e-4 for critic. Also, since I am collecting 20 SARS tuples for each step, I decide to increase the Tau from 1e-3 to 2e-3 to speed up convergence. Since, I increased Tau, I decided to add clipping gradient for critic by adding the line below as suggested in the benchmark implementation page.
+
+```python
+torch.nn.utils.clip_grad_norm(self.critic_local.parameters(), 1)
+```
+
+I also tried updating the network every 5 steps and did not see significant improvement in the results. 
+
+I decided to tune the network by adding batch normalization and I  noticed little to none improvement in the learning of the agent. 
+
+### Ideas for Future Work:
+
+Without a doubt, D4PG with Distributed training can definitely speed up the training of the agent as it can gather more variety of tuples to learn.  Also, adjusting the Ornstein-Uhlenbeck noise by adjusting sigma can impact exploration more and can result in efficiently trained agent.
+
+## Results:
+
+Results from the training are shared below:
+
+![image-20200403170122634]images/image-20200403170122634.png)
+
+
+
+### 
