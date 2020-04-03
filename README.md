@@ -4,7 +4,7 @@
 [image2]: https://user-images.githubusercontent.com/10624937/43851646-d899bf20-9b00-11e8-858c-29b5c2c94ccc.png "Crawler"
 
 
-# Project 2: DDPG (Actor/Critic) Reinforcement Learning using PyTorch and Unity ML -  Reacher Environment 
+# DDPG (Actor/Critic) Reinforcement Learning using PyTorch and Unity ML -  Reacher Environment 
 
 ### Overview
 
@@ -108,7 +108,7 @@ Unity Environment is already built and made available as part of Deep Reinforcem
 
 DDPG is a model-free off-policy actor-critic algorithm that learns directly from observation spaces. DDPG employs Actor-Critic model, where Actor learns the policy and Critic learns the value function to evaluate the quality of the action chosen by the policy. while Deep Q-Network learns the Q-function using experience replay  and works well in discrete space, DDPG algorithm extends it to  continuous action spaces using Actor-Critic framework while learning policy.
 
-![image-20200403165854862](C:\Users\New User\AppData\Roaming\Typora\typora-user-images\image-20200403165854862.png)
+![image-20200403165854862](images\image-20200403165854862.png)
 
 ### Repository
 
@@ -126,7 +126,6 @@ The repository contains the below files:
 
 Pendulum-v0 environment with [Deep Deterministic Policy Gradients (DDPG)](https://github.com/udacity/deep-reinforcement-learning/blob/master/ddpg-pendulum/DDPG.ipynb) is used as reference  to build the model.  The model architecture that is used is:
 
-```html
 Actor:
 	Input(state size of 32) &rarr; Dense Layer(256) &rarr; RELU &rarr; Dense Layer(128) &rarr; RELU &rarr; Dense Layer( action size of 4) &rarr; TANH
 
@@ -135,9 +134,6 @@ Critic:
 
 Agent:
 	Actor Local and Critic Local networks are trained and updates the Actor Target and Critic Target networks using weighting factor Tau.
-```
-
-
 
 Please refer to Report.md for more details on the model and parameters used for tuning
 
@@ -145,5 +141,5 @@ Please refer to Report.md for more details on the model and parameters used for 
 
 Results from the training are shared below:
 
-![image-20200403170122634](C:\Users\New User\AppData\Roaming\Typora\typora-user-images\image-20200403170122634.png)
+![image-20200403170122634](images\image-20200403170122634.png)
 
