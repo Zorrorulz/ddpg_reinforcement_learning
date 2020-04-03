@@ -85,7 +85,7 @@ torch.nn.utils.clip_grad_norm(self.critic_local.parameters(), 1)
 
 I also tried updating the network every 5 steps and also tuning the weight decay. I did not see significant improvement in the results. 
 
-I decided to tune the network by adding batch normalization and I  noticed little to none improvement in the learning of the agent.  The above hyperparameters gave good results as can be seen in the results section below
+I decided to tune the network by adding batch normalization and I  noticed little to none improvement in the learning of the agent.  Adjusting the OU noise from random sampling to standard normal improved the learning of the training agent. The above hyperparameters gave good results as can be seen in the results section below
 
 ### Ideas for Future Work:
 
