@@ -49,7 +49,7 @@ Actor:
 	Input(state size of 32) &rarr; Dense Layer(256) &rarr; RELU &rarr; Dense Layer(128) &rarr; RELU &rarr; Dense Layer( action size of 4) &rarr; TANH
 
 Critic:
-	Input(state size of 32) &rarr; Dense Layer(256) &rarr; RELU &rarr; Dense Layer(128) &rarr; RELU &rarr; Dense Layer( action size of 4) &rarr; TANH
+	Input(state size of 32) &rarr; Dense Layer(256) &rarr; RELU &rarr; Dense Layer(128) &rarr; RELU &rarr; Dense Layer( action size of 4) 
 
 Agent:
 	Actor Local and Critic Local networks are trained and updates the Actor Target and Critic Target networks using weighting factor Tau.

@@ -108,7 +108,7 @@ Unity Environment is already built and made available as part of Deep Reinforcem
 
 DDPG is a model-free off-policy actor-critic algorithm that learns directly from observation spaces. DDPG employs Actor-Critic model, where Actor learns the policy and Critic learns the value function to evaluate the quality of the action chosen by the policy. while Deep Q-Network learns the Q-function using experience replay  and works well in discrete space, DDPG algorithm extends it to  continuous action spaces using Actor-Critic framework while learning policy.
 
-![image-20200403165854862](images/image-20200403165854862.png)
+![image-20200403165854862](images\image-20200403165854862.png)
 
 ### Repository
 
@@ -130,7 +130,7 @@ Actor:
 	Input(state size of 32) &rarr; Dense Layer(256) &rarr; RELU &rarr; Dense Layer(128) &rarr; RELU &rarr; Dense Layer( action size of 4) &rarr; TANH
 
 Critic:
-	Input(state size of 32) &rarr; Dense Layer(256) &rarr; RELU &rarr; Dense Layer(128) &rarr; RELU &rarr; Dense Layer( action size of 4) &rarr; TANH
+	Input(state size of 32) &rarr; Dense Layer(256) &rarr; RELU &rarr; Dense Layer(128) &rarr; RELU &rarr; Dense Layer( action size of 4) 
 
 Agent:
 	Actor Local and Critic Local networks are trained and updates the Actor Target and Critic Target networks using weighting factor Tau.
@@ -141,5 +141,5 @@ Please refer to Report.md for more details on the model and parameters used for 
 
 Results from the training are shared below:
 
-![image-20200403170122634](images/image-20200403170122634.png)
+![image-20200403170122634](images\image-20200403170122634.png)
 
