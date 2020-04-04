@@ -95,4 +95,4 @@ Without a doubt, D4PG with Distributed training can definitely speed up the trai
 
 Results from the training are shared below:
 
-![image-20200403170122634](images\image-20200403170122634.png)
+![image-20200403170122634](images/image-20200403170122634.png)
