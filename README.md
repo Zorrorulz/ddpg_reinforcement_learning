@@ -146,9 +146,9 @@ Results from DDPG training  with prioritized experience replay and experience re
 
 ##### DDPG with Prioritized Experience Replay
 
-![image-20200405013049322](D:\DeepLearning\git\ddpg_reinforcement_learning\images\image-20200405013049322.png)
+![image-20200405013049322](images/image-20200405013049322.png)
 
 ##### DDPG with Experience Replay
 
-![image-20200403170122634](D:/DeepLearning/git/ddpg_reinforcement_learning/images/image-20200403170122634.png)
+![image-20200403170122634](images/image-20200403170122634.png)
 
