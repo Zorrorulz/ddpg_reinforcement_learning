@@ -108,15 +108,18 @@ Unity Environment is already built and made available as part of Deep Reinforcem
 
 DDPG is a model-free off-policy actor-critic algorithm that learns directly from observation spaces. DDPG employs Actor-Critic model, where Actor learns the policy and Critic learns the value function to evaluate the quality of the action chosen by the policy. while Deep Q-Network learns the Q-function using experience replay  and works well in discrete space, DDPG algorithm extends it to  continuous action spaces using Actor-Critic framework while learning policy.
 
-![image-20200403165854862](images/image-20200403165854862.png)
+![image-20200403165854862](images\image-20200403165854862.png)
 
 ### Repository
 
 The repository contains the below files:
 
 - ddpg_continuous_agent.ipynb :  Model for Actor and Critic along with agent learns using Experience Replay and OUNoise. Training the agent and testing the agent is implemented here.
+- ddpg_continuous_agent_prioritized_replay.ipynb : Model for Actor and Critic along with agent learns using Prioritized Experience Replay and OUNoise. Training the agent and testing the agent is implemented here. The agent trained using DDPG with prioritized experience replay buffer learned faster. 
 - checkpoint_actor.pth : Learned model weights for Actor
 - checkpoint_critic.pth : Learned model weights for Critic
+- checkpoint_actor_preplay.pth : Learned model weights for Actor with Prioritized replay
+- checkpoint_critic_preplay.pth : Learned model weights for Critic with Prioritized replay
 - images  directory: contains images used in documentation
 - multiple_agents: Please copy Reacher environment [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86_64.zip) to this location or modify the filepath in ddpg_continuous_agent.ipynb to point to the correct location.
 
@@ -139,7 +142,13 @@ Please refer to Report.md for more details on the model and parameters used for 
 
 ## Results:
 
-Results from the training are shared below:
+Results from DDPG training  with prioritized experience replay and experience replay buffer are shared below. The agent trained using prioritized experience replay showed faster and efficient learning than experience replay. The agent with DDPG with prioritized experience replay learned the environment in 24 less episodes than the agent with DDPG and experience replay.
 
-![image-20200403170122634](images/image-20200403170122634.png)
+##### DDPG with Prioritized Experience Replay
+
+![image-20200405013049322](D:\DeepLearning\git\ddpg_reinforcement_learning\images\image-20200405013049322.png)
+
+##### DDPG with Experience Replay
+
+![image-20200403170122634](D:/DeepLearning/git/ddpg_reinforcement_learning/images/image-20200403170122634.png)
 
